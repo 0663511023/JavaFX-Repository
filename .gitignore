@@ -1,0 +1,16 @@
+# Compiled class files & build directories
+*.class
+bin/
+target/
+build/
+
+# IDE specific files (Eclipse)
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+
+# OS generated files
+.DS_Store
+Thumbs.db
