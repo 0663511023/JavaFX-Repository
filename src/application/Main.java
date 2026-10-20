@@ -1,5 +1,9 @@
 package application;
-	
+
+/** Main.java
+ * Descriptions: Contains application to switch between scenes
+*/
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
