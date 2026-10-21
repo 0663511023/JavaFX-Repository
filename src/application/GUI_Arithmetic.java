@@ -250,6 +250,7 @@ public class GUI_Arithmetic extends Application {
 		stage.setTitle("JavaFX Arithmetic");
 		stage.setScene(scene);
 		stage.show();
+		stage.setResizable(false);
 	}
 	
 	
