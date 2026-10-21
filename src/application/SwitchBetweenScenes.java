@@ -19,7 +19,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 
-public class Main extends Application{
+public class SwitchBetweenScenes extends Application{
 	
 	Button button;
 	
@@ -69,6 +69,7 @@ public class Main extends Application{
 		window.setScene(scene1);
 		window.setTitle("The First Scene");
 		window.show();
+		window.setResizable(false);
 	}
 	
 	public static void main(String[] args) {
