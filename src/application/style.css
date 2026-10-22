@@ -1,0 +1,56 @@
+/* Write CSS rules */
+
+/* Apply CSS to the clear and delete buttons */
+#clear-button {
+	-fx-background-color: green;
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
+}
+#clear-button:hover {
+	-fx-opacity: 0.8;
+}
+
+#delete-button {
+	-fx-background-color: green;
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
+}
+#delete-button:hover {
+		-fx-opacity: 0.8;
+}
+ 
+/* Apply CSS to the buttons */
+.operator-button {
+	-fx-background-color: #1f618d; /* Deep Blue */
+	-fx-text-fill: white;
+	-fx-font-size: 35px;
+	-fx-background-radius: 5px;
+	-fx-font-weight: bold;
+}
+.operator-button:hover {
+	-fx-background-color: #2980b9;
+}
+
+/* Apply CSS to the equals button */
+#equals-button {
+	-fx-background-color: #e67e22; /* Vibrant Orange */
+	-fx-text-fill: white;
+	-fx-font-size: 20px;
+	-fx-background-radius: 5px;
+	-fx-font-weight: bold;
+}
+#equals-button:hover {
+	-fx-background-color: #f39c12 /* Brighter Orange on hover */
+}
+
+/* Apply CSS to the number buttons */
+.number-button {
+	-fx-background-color: #3c3f41; /* Clean neutral dark gray */
+	-fx-text-fill: white; /* Crisp white text */
+	-fx-font-size: 20px;
+	-fx-background-radius: 5px;
+		-fx-font-weight: bold;
+}
+.number-button:hover {
+	-fx-background-color: #505355; /* Slightly lighter gray when hovering mouse */
+}

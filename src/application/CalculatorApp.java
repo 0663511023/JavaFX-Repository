@@ -6,8 +6,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.stage.Stage;
 
 public class CalculatorApp extends Application {
@@ -31,18 +35,16 @@ public class CalculatorApp extends Application {
 		Button nine = new Button("9");
 		
 		Button delete = new Button("\u232B");
+		delete.setId("delete-button");
 		
 		Button clear = new Button("AC");
+		clear.setId("clear-button");
 		
 		Button four = new Button("4");
 		
 		Button five = new Button("5");
 		
 		Button six = new Button("6");
-		
-		Button multiply = new Button("*");
-		
-		Button divide = new Button("/");
 		
 		Button one = new Button("1");
 		
@@ -54,11 +56,30 @@ public class CalculatorApp extends Application {
 		
 		Button subtract = new Button("-");
 		
+		Button multiply = new Button("x");
+
+		Button divide = new Button("/");
+		
 		Button zero = new Button("0");
 		
 		Button dot = new Button(".");
 		
 		Button equals = new Button("=");
+		equals.setId("equals-button");
+		equals.setMaxWidth(Double.MAX_VALUE);
+		
+		
+		// Style for the number buttons, including the dot button
+		Button[] numbers = {zero, one, two, three, four, five, six, seven, eight, nine, dot};
+		for (Button numBtn : numbers) {
+			numBtn.getStyleClass().add("number-button");
+		}
+		
+		// Style for all operator buttons 
+		Button[] operators = {add, subtract, multiply, divide};
+		for (Button opBtn : operators) {
+			opBtn.getStyleClass().add("operator-button");
+		}
 		
 		Button[] allButtons = {one, two, three, four, five, six, seven, eight, nine, 
 								zero, dot, equals, add, subtract, multiply, divide,
@@ -66,6 +87,8 @@ public class CalculatorApp extends Application {
 		for (Button btn : allButtons) {
 			btn.setStyle("-fx-font-size: 20px");
 			btn.setPrefSize(60, 60);
+			btn.setMaxWidth(Double.MAX_VALUE);
+			btn.setMaxHeight(Double.MAX_VALUE);
 		}
 		
 		// Button Click Event Handlers
@@ -99,30 +122,34 @@ public class CalculatorApp extends Application {
 		// Add buttons in a GripPane (button, column x, row y)
 		GridPane gridPane = new GridPane();
 		// (button, column x, row 0)
-		gridPane.add(seven, 0, 0);
-		gridPane.add(eight, 1, 0);
-		gridPane.add(nine, 2, 0);
-		gridPane.add(delete, 3, 0);
-		gridPane.add(clear, 4, 0);
+		gridPane.add(clear, 0, 0);
+		gridPane.add(delete, 1, 0);
+		gridPane.add(divide, 3, 0);
 		
 		// (button, column x, row 1)
-		gridPane.add(four, 0, 1);
-		gridPane.add(five, 1, 1);
-		gridPane.add(six, 2, 1);
+		gridPane.add(seven, 0, 1);
+		gridPane.add(eight, 1, 1);
+		gridPane.add(nine, 2, 1);
 		gridPane.add(multiply, 3, 1);
-		gridPane.add(divide, 4, 1);
 		
 		// (button, column x, row 2)
-		gridPane.add(one, 0, 2);
-		gridPane.add(two, 1, 2);
-		gridPane.add(three, 2, 2);
-		gridPane.add(add, 3, 2);
-		gridPane.add(subtract, 4, 2);
+		gridPane.add(four, 0, 2);
+		gridPane.add(five, 1, 2);
+		gridPane.add(six, 2, 2);
+		gridPane.add(subtract, 3, 2);
 		
 		// (button, column x, row 3)
-		gridPane.add(zero, 0, 3);
-		gridPane.add(dot, 1, 3);
-		gridPane.add(equals, 2, 3);
+		gridPane.add(one, 0, 3);
+		gridPane.add(two, 1, 3);
+		gridPane.add(three, 2, 3);
+		gridPane.add(add, 3, 3);
+		
+		// (button, column x, row 4)
+		gridPane.add(zero, 0, 4);
+		gridPane.add(dot, 1, 4);
+		gridPane.add(equals, 2, 4);
+		
+		gridPane.setColumnSpan(equals, 2);
 		
 		gridPane.setHgap(10);
 		gridPane.setVgap(10);
@@ -132,12 +159,45 @@ public class CalculatorApp extends Application {
 		vbox.setStyle("-fx-padding: 20px");
 		vbox.getChildren().addAll(displayField, gridPane);
 		
+		// Make columns grow evenly
+		gridPane.getColumnConstraints().clear();
+		for (int i = 0; i < 4; i++) {
+			ColumnConstraints colConst = new ColumnConstraints();
+			colConst.setHgrow(Priority.ALWAYS);
+			colConst.setPercentWidth(25); // Every column takes up to 25% of the grid width
+			gridPane.getColumnConstraints().add(colConst);
+		}
 		
-		Scene scene = new Scene(vbox, 350, 450);
-		stage.setTitle("JavaFX Calculator App");
+		// Make the display screen tall and match modern look
+		displayField.setPrefHeight(80);
+		displayField.setMaxWidth(Double.MAX_VALUE);
+		displayField.setStyle("-fx-font-size: 32px; -fx-alignment: center-right;");
+		
+		// Make rows grow evenly
+		gridPane.getRowConstraints().clear();
+		for (int i = 0; i < 5; i++) {
+			RowConstraints rowConst = new RowConstraints();
+			rowConst.setVgrow(Priority.ALWAYS);
+			rowConst.setPercentHeight(20); // Every row takes up to 25% of the grid height
+			gridPane.getRowConstraints().add(rowConst);
+		}
+		
+		// Allow the grid pane to expand to fill the bottom section
+		vbox.setVgrow(gridPane, Priority.ALWAYS);
+		
+		// Make the display field stretch wide across the top
+		displayField.setMaxWidth(Double.MAX_VALUE);
+		
+		Image icon = new Image("Calculator_icon (3).png");
+		stage.getIcons().add(icon);
+		
+		Scene scene = new Scene(vbox, 360, 600);
+		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+		
+		stage.setTitle("Calculator App");
 		stage.setScene(scene);
 		stage.show();
-		stage.setResizable(false);
+		stage.setResizable(true);
 	}
 	
 	// Logic for appending number to display
@@ -250,7 +310,7 @@ public class CalculatorApp extends Application {
 					} 
 					else {
 						if (nextNum == 0) {
-							displayField.setText("Error (Division by zero)");
+							displayField.setText("Error (Cannot divide by zero)");
 							return;
 						} 
 						subResult = prevNum / nextNum;
