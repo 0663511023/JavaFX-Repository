@@ -1,56 +1,242 @@
 /* Write CSS rules */
 
-/* Apply CSS to the clear and delete buttons */
-#clear-button {
-	-fx-background-color: green;
-	-fx-text-fill: white;
-	-fx-font-weight: bold;
-}
-#clear-button:hover {
-	-fx-opacity: 0.8;
+
+/* --- Global and Root Themes */
+.root {
+	-fx-background-color: #d1d8e0;
+	-fx-font-family: "Segoe UI", sans-serif;
 }
 
-#delete-button {
-	-fx-background-color: green;
-	-fx-text-fill: white;
-	-fx-font-weight: bold;
-}
-#delete-button:hover {
-		-fx-opacity: 0.8;
-}
- 
-/* Apply CSS to the buttons */
-.operator-button {
-	-fx-background-color: #1f618d; /* Deep Blue */
-	-fx-text-fill: white;
-	-fx-font-size: 35px;
-	-fx-background-radius: 5px;
-	-fx-font-weight: bold;
-}
-.operator-button:hover {
-	-fx-background-color: #2980b9;
+/* --- DARK THEME OVERRIDES --- */
+.root.dark-theme {
+	-fx-background-color: #2f3542;
 }
 
-/* Apply CSS to the equals button */
-#equals-button {
-	-fx-background-color: #e67e22; /* Vibrant Orange */
-	-fx-text-fill: white;
-	-fx-font-size: 20px;
-	-fx-background-radius: 5px;
-	-fx-font-weight: bold;
-}
-#equals-button:hover {
-	-fx-background-color: #f39c12 /* Brighter Orange on hover */
+/* --- Tab & Tabs Styling --- */
+.tab-pane {
+	-fx-background-color: transparent;
+	-fx-tab-min-height: 32px;
 }
 
-/* Apply CSS to the number buttons */
-.number-button {
-	-fx-background-color: #3c3f41; /* Clean neutral dark gray */
-	-fx-text-fill: white; /* Crisp white text */
-	-fx-font-size: 20px;
-	-fx-background-radius: 5px;
-		-fx-font-weight: bold;
+.tab-pane .tab-header-background {
+	-fx-background-color: #e4e7eb;
 }
-.number-button:hover {
-	-fx-background-color: #505355; /* Slightly lighter gray when hovering mouse */
+
+.root.dark-theme .tab-pane .tab-header-background {
+	-fx-background-color: #1e272c;
+}
+
+.tab {
+	-fx-background-color: #dcdde1;
+	-fx-background-radius: 6px 6px;
+	-fx-padding: 8px 16px;
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent; 
+}
+
+.tab:selected {
+	-fx-background-color: #ffffff;
+	-fx-font-weight: bold;
+}
+
+.root.dark-theme .tab {
+	-fx-background-color: #3f4756;
+}
+
+.root.dark-theme .tab:selected {
+	-fx-background-color: #2f3542;
+}
+
+.root.dark-theme .tab .tab-label {
+	-fx-text-fill: #a4b0be;
+}
+
+.root.dark-theme .tab:selected .tab-label {
+	-fx-text-fill: #ffffff;
+}
+
+/* --- Calculator Display Box & Labels --- */
+.display-box {
+	-fx-background-color: #ffffff;
+	-fx-border-color: #a4b0be;
+	-fx-border-radius: 8px;
+	-fx-background-radius: 8px;
+	-fx-padding: 10px 14px;
+}
+
+.root.dark-theme .display-box {
+	-fx-background-color: #1e272c;
+	-fx-border-color: #4b6484;
+}
+
+.expression-label {
+	-fx-font-size: 24px;
+	-fx-font-weight: bold;
+	-fx-text-fill: #2f3640;
+}
+
+.dark-theme .expression-label {
+	-fx-text-fill: #a4b0be;
+}
+
+.result-label {
+	-fx-font-size: 26px;
+	-fx-font-weight: bold;
+	-fx-text-fill: #2f3640;
+}
+
+.root.dark-theme .result-label {
+	-fx-text-fill: #f1f2f6;
+}
+
+/* --- Buttons Styling --- */
+.number-buttons {
+	-fx-background-radius: 6px;
+	-fx-background-color: #ffffff;
+	-fx-border-color: #ced6e0;
+	-fx-text-fill: #2f3640;
+	-fx-font-weight: bold;
+	-fx-cursor: hand;
+	-fx-border-radius: 6px;
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
+}
+
+.number-buttons:hover {
+	-fx-background-color: #dfe4ea;
+}
+
+.root.dark-theme .number-buttons {
+	-fx-background-color: #4b6584;
+	-fx-text-fill: #f1f2f6;	
+}
+
+.root.dark-theme .number-buttons:hover {
+	-fx-background-color: #38ada8;
+}
+
+/* Memory Buttons Custom Styling */
+.memory-buttons {
+	-fx-background-radius: 6px;
+	-fx-background-color: orange;
+	-fx-text-fill: #c92a2a;
+	-fx-font-weight: bold;
+	-fx-cursor: hand;
+	-fx-border-color: #ced4da;
+	-fx-border-radius: 6px;
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
+}
+
+.memory-buttons:hover {
+	-fx-background-color: ffe8a1;
+}
+
+.root.dark-theme .memory-buttons {
+	-fx-background-color: #6c5ce7;
+	-fx-text-fill: #ffffff;
+	-fx-border-color: transparent;
+}
+
+.root.dark-theme .memory-buttons:hover {
+	-fx-background-color: #a29bfe;
+}
+
+/* --- History Tab ListView & Cells --- */
+.list-view {
+	-fx-background-color: transparent;
+	-fx-background-insets: 0;
+	-fx-padding: 0;
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
+}
+
+.list-view .list-cell {
+	-fx-background-color: #ffffff;
+	-fx-text-fill: #2f3640;
+	-fx-font-family: "Consolas", monospace;
+	-fx-font-size: 14px;
+	-fx-padding: 10px;
+	-fx-background-radius: 4px;
+	-fx-border-color: transparent transparent #e4e7eb transparent;
+}
+
+.root.dark-theme .list-view .list-cell {
+	-fx-background-color: #1e272c;
+	-fx-text-fill: #f1f2f6;
+	-fx-border-color: transparent transparent #2f3542 transparent;
+}
+
+.root-view .list-cell:hover {
+	-fx-background-color: #e4f1fe;
+	-fx-text-fill: #0984e3;
+	-fx-cursor: hand;
+}
+
+.root.dark-theme .list-view .list-cell:hover {
+	-fx-background-color: #3867d6;
+	-fx-text-fill: #ffffff;
+}
+
+.list-view .list-cell:filled:selected {
+	-fx-background-color: #0984e3;
+	-fx-text-fill: white;
+}
+
+.root.dark-theme .list-view .list-cell:filled:selected {
+	-fx-background-color: #4b7bec;
+	-fx-text-fill: white;
+}
+
+/* --- Theme Toggle & Action Buttons --- */
+#dark-mode-btn, #light-mode-btn, #clearHistoryBtn {
+	-fx-font-size: 13px;
+	-fx-font-weight: bold;
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
+	-fx-background-radius: 6px;
+	-fx-padding: 6px 12px;
+	-fx-cursor: hand;
+}
+
+#dark-mode-btn {
+	-fx-background-color: #2f3640;
+	-fx-text-fill: #ffffff;
+}
+
+#dark-mode-btn:hover {
+	-fx-background-color: #353b48;
+}
+
+#light-mode-btn {
+	-fx-background-color: #f1f2f6;
+	-fx-text-fill: #2f3640;
+}
+
+#light-mode-btn:hover {
+	-fx-background-color: #dfe4ea;
+}
+
+#clearHistoryBtn {
+	-fx-background-color: #eb4d4b;
+	-fx-text-fill: white;
+}
+
+#clearHistoryBtn:hover {
+	-fx-background-color: #ff7979;
+}
+
+/* History Tab Panel */
+.history-container {
+	-fx-background-color: #ffffff;
+	-fx-border-color: #b2bec3;
+	-fx-border-width: 1px;
+	-fx-border-radius: 8px;
+	-fx-background-radius: 8px;
+	-fx-padding: 15px;
+}
+
+.root.dark-theme .history-container {
+	-fx-background-color: #1e272c;
+	-fx-border-color: #3f4756;
 }
