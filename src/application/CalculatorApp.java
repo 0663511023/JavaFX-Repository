@@ -50,8 +50,71 @@ public class CalculatorApp extends Application {
 		VBox scientificLayout = ScientificCalculator.createScientificLayout();
 		StackPane scientificPane = new StackPane(scientificLayout);
 		Tab scientificTab = new Tab("Scientific", scientificPane);
+		
+		HBox graphingLayout = InteractiveGraphingCalculator.crateInteractiveGraphingLayout();
+		StackPane graphingPane = new StackPane(graphingLayout);
+		Tab graphingTab = new Tab("Graphing", graphingPane);
+		
+		
+		// --- Memory Tab Setup ---
+		ListView<String> memoryView = new ListView<>	(CalculatorMemoryManager.getMemoryList());
+		Label emptyMemoryPlaceHolder = new Label("No memory values stored yet (M+, M-)");
+		emptyMemoryPlaceHolder.setStyle("-fx-font-size: 14px; -fx-text-fill: #718093; -fx-font-style: italic;");
+		memoryView.setPlaceholder(emptyMemoryPlaceHolder);
+		
+		Label memoryInstructionsLabel = new Label(
+			"Guide: Right-click saved memory to recall value into your calculator or delete entries"
+		);
+		memoryInstructionsLabel.setWrapText(true);
+		memoryInstructionsLabel.setStyle(
+			"-fx-font-size: 13px; -fx-text-fill: #2c3e50; -fx-background-color: #f1f2f6;" +
+			"-fx-padding: 10; -fx-background-radius: 5; -fx-border-color: #dcdde1; -fx-border-radius: 5;"
+		);
+		memoryInstructionsLabel.setMaxWidth(Double.MAX_VALUE);
+		
+		ContextMenu memoryContextMenu = new ContextMenu();
+		MenuItem recallMemoryItem = new MenuItem("Recall Memory to Calculator");
+		MenuItem deleteMemoryItem = new MenuItem("Delete Memory Item");
+		memoryContextMenu.getItems().addAll(recallMemoryItem, deleteMemoryItem);
+		memoryView.setContextMenu(memoryContextMenu);
+		
+		recallMemoryItem.setOnAction(e -> {
+			String selected = memoryView.getSelectionModel().getSelectedItem();
+			if (selected != null) {
+				Tab activeTab = tabPane.getSelectionModel().getSelectedItem();
+				if (activeTab != null && "Scientific".equals(activeTab.getText())) {
+					ScientificCalculator.setInputValue(selected);
+				}
+				else {
+					StandardCalculator.setInputValue(selected);
+				}
 				
-		// History Tab Setup
+			}
+		});
+		
+		deleteMemoryItem.setOnAction(e -> {
+			int index = memoryView.getSelectionModel().getSelectedIndex();
+			if (index >= 0) {
+				CalculatorMemoryManager.remorveMemoryEntry(index);
+			}
+		});
+		
+		Button clearAllMemoryBtn = new Button("Clear Memory");
+		clearAllMemoryBtn.setId("clearHistoryBtn");
+		clearAllMemoryBtn.setOnAction(e -> CalculatorMemoryManager.memoryClear());
+		
+		VBox memoryLayout = new VBox(10, memoryInstructionsLabel,memoryView, clearAllMemoryBtn);
+		memoryLayout.setPadding(new Insets(15));
+		memoryLayout.setAlignment(Pos.CENTER);
+		memoryLayout.getStyleClass().add("history-container");
+		memoryLayout.setVgrow(memoryView, Priority.ALWAYS);
+		memoryView.setMaxWidth(Double.MAX_VALUE);
+		
+		StackPane memoryPane = new StackPane(memoryLayout);
+		Tab memoryTab = new Tab ("Memory", memoryPane);
+		
+				
+		// --- History Tab Setup ---
 		ListView<String> historyView = new ListView<>(CalculatorHistory.getHistory());
 		Label emptyPlaceholder = new Label("No entries yet");
 		emptyPlaceholder.setStyle("-fx-font-size: 15px; -fx-text-fill: #718093; -fx-font-style: italic;");
@@ -198,7 +261,7 @@ public class CalculatorApp extends Application {
 			tab.getStyleClass().add("tab");
 		}
 		
-		tabPane.getTabs().addAll(standardTab, scientificTab, historyTab);
+		tabPane.getTabs().addAll(standardTab, scientificTab, historyTab, memoryTab, graphingTab);
 		tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) ->{
 			if (newTab != null && newTab.getContent() != null) {
 				FadeTransition fade = new FadeTransition(Duration.millis(1000), newTab.getContent());
@@ -228,7 +291,7 @@ public class CalculatorApp extends Application {
 		
 		Scene scene = new Scene(root, 450, 660);
 		// Call style.css
-		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 		
 		// --- Dynamic Font Scaling for Instructions Label ---
 		scene.widthProperty().addListener((obs, oldVal, newVal) -> {
@@ -293,7 +356,7 @@ public class CalculatorApp extends Application {
 			System.out.println("Icon not found!");
 		}
 		
-		stage.setTitle("Calculator App");
+		stage.setTitle("OmniCalcFX");
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -315,6 +378,8 @@ public class CalculatorApp extends Application {
 			else {
 				root.getStyleClass().remove("dark-theme");
 			}
+			// Sync graphing canvas color with current theme mode
+			InteractiveGraphingCalculator.setDarkTheme(isDark);
 		});
 				
 		// Fade-in transition back to full opacity
@@ -326,6 +391,7 @@ public class CalculatorApp extends Application {
 		SequentialTransition seq = new SequentialTransition(fadeOut, fadeIn);
 		seq.play();
 	}
+	
 	
 	public static void main(String[] args) {
 		launch(args);

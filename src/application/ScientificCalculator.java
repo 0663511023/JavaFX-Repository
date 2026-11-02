@@ -205,7 +205,7 @@ public class ScientificCalculator {
 		logBtn.setOnAction(e -> appendInput("log("));
 		lnBtn.setOnAction(e -> appendInput("ln("));
 		
-		sqrtBtn.setOnAction(e -> appendInput("\u221A"));
+		sqrtBtn.setOnAction(e -> appendInput("\u221A("));
 		powerBtn.setOnAction(e -> appendInput("^"));
 		piBtn.setOnAction(e -> appendInput("\u03C0"));
 		
@@ -268,8 +268,12 @@ public class ScientificCalculator {
 	}
 		
 	public static void appendInput(String val) {
+		if (resultLabel.getText().contains("Error")) {
+			triggerClear();
+		}
+		
 		if (isEvaluated) {
-			if (val.equals("+") || val.equals("-") || val.equals("\u00D7") || val.equals("\u00F7")) {
+			if (val.equals("+") || val.equals("-") || val.equals("\u00D7") || val.equals("\u00F7") || val.equals("^")) {
 				// Chain calculation from the previous result
 				currentInput = resultLabel.getText() + val;
 			}
@@ -279,7 +283,24 @@ public class ScientificCalculator {
 			isEvaluated = false;
 		}
 		else {
+			// Prevent multiple decimal points in the current number segment
+			if (val.equals(".")) {
+				// Find the last operator to check the current number bloc
+				int lastOpIndex = Math.max(
+						Math.max(currentInput.lastIndexOf('+'), currentInput.lastIndexOf('-')),
+						Math.max(currentInput.lastIndexOf('\u00D7'), currentInput.lastIndexOf('\u00F7'))
+				);
+				String currentNumberSegment = lastOpIndex == -1 ? currentInput : currentInput.substring(lastOpIndex);
+				if (currentNumberSegment.contains(".")) {
+					return; // Ignore duplicate decimal point
+				}
+			}
+			
+			// Prevent multiple leading zeros
 			if (currentInput.equals("0") && !val.equals(".")) {
+				return;
+			}
+			if (currentInput.equals("0") && !val.equals(".") && !val.equals("+") && !val.equals("-") && !val.equals("\u00D7") && !val.equals("\u00F7")) {
 				currentInput = val;
 			}
 			else {

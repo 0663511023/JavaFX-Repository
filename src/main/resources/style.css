@@ -240,3 +240,55 @@
 	-fx-background-color: #1e272c;
 	-fx-border-color: #3f4756;
 }
+
+/* ---Graphing Tab Controls & Theme Adaptations --- */
+.graphing-container {
+	-fx-background-color: #ffffff;
+	-fx-border-color: #b2bec3;
+	-fx-border-width: 1px;
+	-fx-border-width: 8px;
+	-fx-background-radius: 8px;
+	-fx-padding: 12px;
+}
+
+.root.dark-theme .graphing-container {
+	-fx-background-color: #1e272c;
+	-fx-border-color: #3f4756;
+}
+
+.graph-action-btn {
+	-fx-background-color: #0984e3;
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
+	-fx-font-size: 12px;
+	-fx-background-radius: 5px;
+	-fx-cursor: hand;
+}
+
+.graph-action-btn:hover {
+	-fx-background-color: #74b9ff;
+}
+
+.root.dark-theme .graph-action-btn {
+	-fx-background-color: #00cec9;
+	-fx-text-fill: #2d3436;
+}
+
+.root.dark-theme .graph-action-btn:hover {
+	-fx-background-color: #81ecec;
+}
+
+/* Tab Headers Label Colors */
+.tab .tab-label {
+	-fx-text-fill: #2f3640;
+	-fx-font-weight: bold;
+	-fx-font-size: 13px;
+}
+
+.root.dark-theme .tab .tab-label {
+	-fx-text-fill: #a4b0be;
+}
+
+.root.dark-theme .tab:selected .tab-label {
+	-fx-text-fill: #ffffff;
+}
